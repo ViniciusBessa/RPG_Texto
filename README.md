@@ -1,7 +1,7 @@
 # RPG de texto
 
 
- Um RPG de texto orientado à objetos sem história.
+ Um RPG de texto orientado a objetos sem história.
 
 
 ## Requisitos
