@@ -36,4 +36,4 @@ caverna = (basilisco, kobold)
 # Selva
 goblin = ('Goblin     ', 10, 5, 3, 5, 5)
 troll = ('Troll      ', 14, 8, 6, 7, 8)
-selva = (goblin, goblin)
+selva = (goblin, troll)
