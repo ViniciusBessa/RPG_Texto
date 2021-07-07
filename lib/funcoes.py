@@ -2,9 +2,9 @@ import colorama
 from random import choice
 from time import sleep
 
-from itens import *
-from usuario import usuario, clear
-from inimigos import floresta, caverna, selva, Inimigo
+from .itens import *
+from .usuario import usuario, clear
+from .inimigos import floresta, caverna, selva, Inimigo
 
 
 def menu_inicial():

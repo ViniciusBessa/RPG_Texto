@@ -3,7 +3,7 @@ from random import random
 from json import dumps, load
 from time import sleep
 
-from itens import *
+from .itens import *
 
 
 def clear():
@@ -295,12 +295,12 @@ class Usuario(Personagem):
     def save(self, opcao):
         """Método utilizado para salvar e carregar o jogo"""
         if opcao == 'salvar':
-            with open('save/save.json', 'w') as save:
+            with open('lib/save/save.json', 'w') as save:
                 save.write(dumps(self.__dict__))
                 print('Jogo salvo com sucesso!')
 
         elif opcao == 'carregar':
-            with open('save/save.json') as save:
+            with open('lib/save/save.json') as save:
                 jogo = list(load(save).values())
                 self.vida, self.vida_atual, self.ataque, self.defesa, self.mana, self.mana_atual = jogo[:6]
                 self.dano_magico, self.barra_de_xp, self.levelup, self.level, self.dinheiro = jogo[6:11]

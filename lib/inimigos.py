@@ -1,4 +1,4 @@
-from usuario import Personagem
+from .usuario import Personagem
 
 
 class Inimigo(Personagem):
