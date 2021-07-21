@@ -166,7 +166,7 @@ class Usuario(Personagem):
             # Status do oponente
             vida_oponente = str(oponente.vida_atual).ljust(4)
 
-            print(f'______________________________\n| {oponente.nome} ', end='')
+            print(f'______________________________\n| {oponente.nome.ljust(11)} ', end='')
             print(colorama.Fore.RED, f'Vida: {vida_oponente}    ', end='')
             print(colorama.Style.RESET_ALL, end='')
             print(f'|\n------------------------------')
@@ -295,12 +295,12 @@ class Usuario(Personagem):
     def save(self, opcao):
         """Método utilizado para salvar e carregar o jogo"""
         if opcao == 'salvar':
-            with open('lib/save/save.json', 'w') as save:
+            with open('lib/save.json', 'w') as save:
                 save.write(dumps(self.__dict__))
                 print('Jogo salvo com sucesso!')
 
         elif opcao == 'carregar':
-            with open('lib/save/save.json') as save:
+            with open('lib/save.json') as save:
                 jogo = list(load(save).values())
                 self.vida, self.vida_atual, self.ataque, self.defesa, self.mana, self.mana_atual = jogo[:6]
                 self.dano_magico, self.barra_de_xp, self.levelup, self.level, self.dinheiro = jogo[6:11]

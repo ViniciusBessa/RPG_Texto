@@ -24,16 +24,16 @@ class Inimigo(Personagem):
 
 # Inimigos
 # Floresta
-gnomo = ('Gnomo      ', 8, 4, 0, 2, 2)
-elfo = ('Elfo       ', 14, 5, 1, 6, 5)
+gnomo = ('Gnomo', 8, 4, 0, 2, 2)
+elfo = ('Elfo', 14, 5, 1, 6, 5)
 floresta = (gnomo, elfo)
 
 # Caverna
-kobold = ('Kobold     ', 16, 6, 1, 3, 3)
-basilisco = ('Basilisco  ', 30, 12, 12, 12, 11)
+kobold = ('Kobold', 16, 6, 1, 3, 3)
+basilisco = ('Basilisco', 30, 12, 12, 12, 11)
 caverna = (basilisco, kobold)
 
 # Selva
-goblin = ('Goblin     ', 10, 5, 3, 5, 5)
-troll = ('Troll      ', 14, 8, 6, 7, 8)
+goblin = ('Goblin', 10, 5, 3, 5, 5)
+troll = ('Troll', 14, 8, 6, 7, 8)
 selva = (goblin, troll)
