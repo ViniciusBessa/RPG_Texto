@@ -1,5 +1,5 @@
-from lib.funcoes import menu_inicial, menu_principal
+from lib.funcoes import menu_principal, menu_opcoes
 
 if __name__ == '__main__':
-    menu_inicial()
     menu_principal()
+    menu_opcoes()

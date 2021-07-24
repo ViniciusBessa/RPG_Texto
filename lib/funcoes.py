@@ -7,9 +7,9 @@ from .usuario import usuario, clear
 from .inimigos import floresta, caverna, selva, Inimigo
 
 
-def menu_inicial():
-    """Função para chamar o menu inicial"""
-    print('Menu inicial')
+def menu_principal():
+    """Função para chamar o menu principal"""
+    print('Menu principal')
     print('_________________')
     print('| Novo jogo     |')
     print('| Carregar jogo |')
@@ -30,16 +30,16 @@ def menu_inicial():
             print('Arquivo de save não encontrado.')
             sleep(2)
             clear()
-            menu_inicial()
+            menu_principal()
     else:
         print('Opção inválida.')
         sleep(2)
         clear()
-        menu_inicial()
+        menu_principal()
 
 
-def menu_principal():
-    """Função para chamar o menu principal"""
+def menu_opcoes():
+    """Função para chamar o menu de opções"""
     print('Menu de opções')
     print('________________________')
     print('|  Viajar   Descansar  |')
@@ -53,7 +53,7 @@ def menu_principal():
     if opcao.strip(" ").lower() == 'viajar':
         viajar(opcao)
         clear()
-        menu_principal()
+        menu_opcoes()
 
     elif opcao.strip(" ").lower() == 'descansar':
         usuario.vida_atual = usuario.vida
@@ -62,30 +62,30 @@ def menu_principal():
         print('Descansando, você recupera vida e mana!')
         sleep(2)
         clear()
-        menu_principal()
+        menu_opcoes()
 
     elif opcao.strip(" ").lower() == 'status':
         usuario.status()
         sleep(2)
         clear()
-        menu_principal()
+        menu_opcoes()
 
     elif opcao.strip(" ").lower() == 'equips':
         usuario.equips()
         sleep(2)
         clear()
-        menu_principal()
+        menu_opcoes()
 
     elif opcao.strip(" ").lower() == 'salvar':
         clear()
         usuario.save('salvar')
-        menu_principal()
+        menu_opcoes()
 
     elif opcao.strip(" ").lower() in ['inventario', 'inventário']:
         usuario.invent()
         sleep(2)
         clear()
-        menu_principal()
+        menu_opcoes()
 
     elif opcao.strip(" ").lower() == 'sair':
         print('Programa finalizado.')
@@ -95,7 +95,7 @@ def menu_principal():
         print('Opção inválida')
         sleep(2)
         clear()
-        menu_principal()
+        menu_opcoes()
 
 
 def viajar(opcao):
@@ -131,6 +131,7 @@ def viajar(opcao):
                         clear()
                         while True:
                             dinheiro = str(usuario.dinheiro).ljust(4)
+                            print('Apotecário')
                             print('____________________________')
                             print('| Poção de vida  Preço: 10 |')
                             print('| Poção de mana  Preço: 10 |')
@@ -156,6 +157,7 @@ def viajar(opcao):
                     elif local.strip(" ").lower() == 'ferreiro':
                         while True:
                             dinheiro = str(usuario.dinheiro).ljust(4)
+                            print('Ferreiro')
                             print('_____________')
                             print('| Espadas   |')
                             print('| Escudos   |')
