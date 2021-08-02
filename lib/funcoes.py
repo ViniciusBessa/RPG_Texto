@@ -168,7 +168,7 @@ def viajar(opcao):
                             if escolha.strip(" ").lower() == 'espadas':
                                 print('_____________________________________________')
                                 for espada in espadas:
-                                    print(f'| {espada[0]} Dano: {espada[1]}   Preço: {espada[2]} |')
+                                    print(f'| {espada[0].ljust(20)} Dano: {espada[1]}   Preço: {espada[2].ljust(3)} |')
                                 print('|                                           |')
                                 print(f'| Dinheiro: {dinheiro}                            |')
                                 print('---------------------------------------------')
@@ -179,7 +179,7 @@ def viajar(opcao):
                             elif escolha.strip(" ").lower() == 'escudos':
                                 print('_____________________________________________')
                                 for escudo in escudos:
-                                    print(f'| {escudo[0]}Dano: {escudo[1]}    Preço: {escudo[2]} |')
+                                    print(f'| {escudo[0].ljust(20)}Dano: {escudo[1]}    Preço: {escudo[2].ljust(3)} |')
                                 print('|                                           |')
                                 print(f'| Dinheiro: {dinheiro}                            |')
                                 print('---------------------------------------------')
@@ -190,7 +190,7 @@ def viajar(opcao):
                             elif escolha.strip(" ").lower() == 'armaduras':
                                 print('_____________________________________________')
                                 for armadura in armaduras:
-                                    print(f'| {armadura[0]}Dano: {armadura[1]}    Preço: {armadura[2]} |')
+                                    print(f'| {armadura[0].ljust(20)}Dano: {armadura[1]}    Preço: {armadura[2].ljust(3)} |')
                                 print('|                                           |')
                                 print(f'| Dinheiro: {dinheiro}                            |')
                                 print('---------------------------------------------')

@@ -158,7 +158,7 @@ class Usuario(Personagem):
 
     def batalha(self, oponente):
         """Método que começa uma batalha entre o usuário e um inimigo."""
-        print(f'Um(a) {oponente.nome.strip(" ").lower()} se aproxima!')
+        print(f'Um(a) {oponente.nome.lower()} se aproxima!')
         sleep(1)
         while oponente.vida_atual > 0:
             cond = 0
@@ -265,14 +265,14 @@ class Usuario(Personagem):
 
             # Dano do oponente
             if cond != 0 and oponente.ataque > self.escudo[1] + self.armadura[1] + self.defesa:
-                print(f'O(a) {oponente.nome.strip(" ").lower()} causou '
+                print(f'O(a) {oponente.nome.lower()} causou '
                       f'{oponente.ataque - (self.escudo[1] + self.armadura[1] + self.defesa)} de dano.')
                 self.vida_atual -= oponente.ataque - (self.escudo[1] + self.armadura[1] + self.defesa)
                 sleep(2)
                 clear()
 
             elif cond != 0:
-                print(f'O ataque do(a) {oponente.nome.strip(" ").lower()} não causou nenhum dano.')
+                print(f'O ataque do(a) {oponente.nome.lower()} não causou nenhum dano.')
                 sleep(2)
                 clear()
 
@@ -284,7 +284,7 @@ class Usuario(Personagem):
             clear()
 
         if oponente.vida_atual <= 0:
-            print(f'O(a) {oponente.nome.strip(" ").lower()} morreu!')
+            print(f'O(a) {oponente.nome.lower()} morreu!')
             print(f'{oponente.pontos_xp} pontos de xp adquiridos!')
             print(f'{oponente.dinheiro} moedas adquiridas! ')
             self.barra_de_xp += oponente.pontos_xp
@@ -309,9 +309,9 @@ class Usuario(Personagem):
     def compra_equip(self, nome_equipamento, tipo_equipamento):
         """Método para efetuar a compra de um equipamento"""
         for equipamento in tipo_equipamento:
-            if nome_equipamento.lower() == equipamento[0].strip(" ").lower() and self.dinheiro >= int(
+            if nome_equipamento.lower() == equipamento[0].lower() and self.dinheiro >= int(
                     equipamento[2]):
-                print(f'Você comprou e equipou a {nome_equipamento.strip(" ").lower()}.')
+                print(f'Você comprou e equipou a {nome_equipamento.lower()}.')
                 self.dinheiro -= int(equipamento[2])
                 if nome_equipamento.split()[0] == 'espada':
                     self.espada = equipamento
@@ -321,8 +321,7 @@ class Usuario(Personagem):
                     self.armadura = equipamento
                 return
 
-            elif nome_equipamento.lower() == equipamento[0].strip(" ").lower() and self.dinheiro < int(
-                    equipamento[2]):
+            elif nome_equipamento.lower() == equipamento[0].lower() and self.dinheiro < int(equipamento[2]):
                 print(f'Você não tem dinheiro o suficiente para comprar o(a) {nome_equipamento.lower()}.')
                 return
         print(f'Equipamento inválido.')
@@ -331,7 +330,7 @@ class Usuario(Personagem):
     def compra_item(self, nome_item, tipo_item):
         """Método para efetuar a compra de um consumível"""
         if nome_item.lower() in tipo_item[0] and self.dinheiro >= int(tipo_item[1]):
-            print(f'Você comprou um(a) {nome_item.strip(" ").lower()}.')
+            print(f'Você comprou um(a) {nome_item.lower()}.')
             self.dinheiro -= int(tipo_item[1])
             if nome_item in pocao_de_vida[0]:
                 self.inventario[0][1] += 1
