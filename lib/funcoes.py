@@ -51,7 +51,7 @@ def menu_opcoes():
     clear()
 
     if opcao.strip(" ").lower() == 'viajar':
-        viajar(opcao)
+        viajar()
         clear()
         menu_opcoes()
 
@@ -98,10 +98,9 @@ def menu_opcoes():
         menu_opcoes()
 
 
-def viajar(opcao):
+def viajar():
     """Função para viajar"""
-    if opcao.strip(" ").lower() == 'viajar':
-        while True:
+    while True:
             print('Locais disponíveis')
             print('________________________')
             print('|  Floresta   Caverna  |')
@@ -118,99 +117,7 @@ def viajar(opcao):
                 usuario.batalha(inimigo)
 
             elif local.strip(" ").lower() == 'vila':
-                while True:
-                    clear()
-                    print('Ao entrar na vila, você vê diversas tavernas e lojas')
-                    print('________________________')
-                    print('| Apotecário  Ferreiro |')
-                    print('------------------------')
-                    local = input('Digite uma das opções, ou sair: ')
-                    clear()
-
-                    if local.strip(" ").lower() == 'apotecario' or local.strip(" ").lower() == 'apotecário':
-                        clear()
-                        while True:
-                            dinheiro = str(usuario.dinheiro).ljust(4)
-                            print('Apotecário')
-                            print('____________________________')
-                            print('| Poção de vida  Preço: 10 |')
-                            print('| Poção de mana  Preço: 10 |')
-                            print('|                          |')
-                            print(f'| Dinheiro: {dinheiro}           |')
-                            print('----------------------------')
-                            escolha = input('Digite o nome de uma das poções, ou sair: ')
-
-                            if escolha.strip(" ").lower() in pocao_de_vida[0]:
-                                usuario.compra_item(escolha, pocao_de_vida)
-
-                            elif escolha.strip(" ").lower() in pocao_de_mana[0]:
-                                usuario.compra_item(escolha, pocao_de_mana)
-
-                            elif escolha.strip(" ").lower() == 'sair':
-                                break
-
-                            else:
-                                print('Opção inválida.')
-                            sleep(2)
-                            clear()
-
-                    elif local.strip(" ").lower() == 'ferreiro':
-                        while True:
-                            dinheiro = str(usuario.dinheiro).ljust(4)
-                            print('Ferreiro')
-                            print('_____________')
-                            print('| Espadas   |')
-                            print('| Escudos   |')
-                            print('| Armaduras |')
-                            print('-------------')
-                            escolha = input('Digite uma das opções, ou sair: ')
-
-                            if escolha.strip(" ").lower() == 'espadas':
-                                print('_____________________________________________')
-                                for espada in espadas:
-                                    print(f'| {espada[0].ljust(20)} Dano: {espada[1]}   Preço: {espada[2].ljust(3)} |')
-                                print('|                                           |')
-                                print(f'| Dinheiro: {dinheiro}                            |')
-                                print('---------------------------------------------')
-                                espada_esc = input('Digite o nome de uma das espadas, ou sair: ').strip(" ")
-                                if espada_esc != 'sair':
-                                    usuario.compra_equip(espada_esc, espadas)
-
-                            elif escolha.strip(" ").lower() == 'escudos':
-                                print('_____________________________________________')
-                                for escudo in escudos:
-                                    print(f'| {escudo[0].ljust(20)}Dano: {escudo[1]}    Preço: {escudo[2].ljust(3)} |')
-                                print('|                                           |')
-                                print(f'| Dinheiro: {dinheiro}                            |')
-                                print('---------------------------------------------')
-                                escudo_esc = input('Digite o nome de um dos escudos, ou sair: ').strip(" ")
-                                if escudo_esc != 'sair':
-                                    usuario.compra_equip(escudo_esc, escudos)
-
-                            elif escolha.strip(" ").lower() == 'armaduras':
-                                print('_____________________________________________')
-                                for armadura in armaduras:
-                                    print(f'| {armadura[0].ljust(20)}Dano: {armadura[1]}    Preço: {armadura[2].ljust(3)} |')
-                                print('|                                           |')
-                                print(f'| Dinheiro: {dinheiro}                            |')
-                                print('---------------------------------------------')
-                                armadura_esc = input('Digite o nome de uma das armaduras, ou sair: ')
-                                if armadura_esc != 'sair':
-                                    usuario.compra_equip(armadura_esc, armaduras)
-
-                            elif escolha.strip(" ").lower() == 'sair':
-                                break
-
-                            else:
-                                print('Opção inválida.')
-                            sleep(2)
-                            clear()
-
-                    elif local.strip(" ").lower() in ['sair', 'sair da vila']:
-                        break
-
-                    else:
-                        print('Opção inválida')
+                vila()
 
             elif local.strip(" ").lower() == 'selva':
                 inimigo = Inimigo(*choice(selva))
@@ -270,3 +177,95 @@ def viajar(opcao):
                 print(colorama.Style.RESET_ALL, end='')
                 sleep(3)
             clear()
+
+
+def vila():
+    while True:
+        clear()
+        print('Ao entrar na vila, você vê diversas tavernas e lojas')
+        print('________________________')
+        print('| Apotecário  Ferreiro |')
+        print('------------------------')
+        local = input('Digite uma das opções, ou sair: ')
+        clear()
+
+        if local.strip(" ").lower() == 'apotecario' or local.strip(" ").lower() == 'apotecário':
+            while True:
+                dinheiro = str(usuario.dinheiro).ljust(4)
+                print('Apotecário')
+                print('____________________________')
+                print('| Poção de vida  Preço: 10 |')
+                print('| Poção de mana  Preço: 10 |')
+                print('|                          |')
+                print(f'| Dinheiro: {dinheiro}           |')
+                print('----------------------------')
+                escolha = input('Digite o nome de uma das poções, ou sair: ')
+
+                if escolha.strip(" ").lower() in pocao_de_vida[0]:
+                    usuario.compra_item(escolha, pocao_de_vida)
+
+                elif escolha.strip(" ").lower() in pocao_de_mana[0]:
+                    usuario.compra_item(escolha, pocao_de_mana)
+
+                elif escolha.strip(" ").lower() == 'sair':
+                    break
+
+                else:
+                    print('Opção inválida.')
+                    sleep(2)
+                    clear()
+
+        elif local.strip(" ").lower() == 'ferreiro':
+            while True:
+                dinheiro = str(usuario.dinheiro).ljust(4)
+                print('Ferreiro')
+                print('_____________')
+                print('| Espadas   |')
+                print('| Escudos   |')
+                print('| Armaduras |')
+                print('-------------')
+                escolha = input('Digite uma das opções, ou sair: ')
+
+                if escolha.strip(" ").lower() == 'espadas':
+                    print('_____________________________________________')
+                    for espada in espadas:
+                        print(f'| {espada[0].ljust(20)} Dano: {espada[1]}   Preço: {espada[2].ljust(3)} |')
+                    print('|                                           |')
+                    print(f'| Dinheiro: {dinheiro}                            |')
+                    print('---------------------------------------------')
+                    espada_esc = input('Digite o nome de uma das espadas: ').strip(" ")
+                    usuario.compra_equip(espada_esc, espadas)
+
+                elif escolha.strip(" ").lower() == 'escudos':
+                    print('_____________________________________________')
+                    for escudo in escudos:
+                        print(f'| {escudo[0].ljust(20)}Dano: {escudo[1]}    Preço: {escudo[2].ljust(3)} |')
+                    print('|                                           |')
+                    print(f'| Dinheiro: {dinheiro}                            |')
+                    print('---------------------------------------------')
+                    escudo_esc = input('Digite o nome de um dos escudos: ').strip(" ")
+                    usuario.compra_equip(escudo_esc, escudos)
+
+                elif escolha.strip(" ").lower() == 'armaduras':
+                    print('_____________________________________________')
+                    for armadura in armaduras:
+                        print(f'| {armadura[0].ljust(20)}Dano: {armadura[1]}    Preço: {armadura[2].ljust(3)} |')
+                    print('|                                           |')
+                    print(f'| Dinheiro: {dinheiro}                            |')
+                    print('---------------------------------------------')
+                    armadura_esc = input('Digite o nome de uma das armaduras: ')
+                    usuario.compra_equip(armadura_esc, armaduras)
+
+                elif escolha.strip(" ").lower() == 'sair':
+                    break
+
+                else:
+                    print('Opção inválida.')
+                    sleep(2)
+                    clear()
+
+        elif local.strip(" ").lower() in ['sair', 'sair da vila']:
+            break
+
+        else:
+            print('Opção inválida')

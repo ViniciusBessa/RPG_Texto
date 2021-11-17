@@ -323,6 +323,7 @@ class Usuario(Personagem):
 
             elif nome_equipamento.lower() == equipamento[0].lower() and self.dinheiro < int(equipamento[2]):
                 print(f'Você não tem dinheiro o suficiente para comprar o(a) {nome_equipamento.lower()}.')
+                sleep(2)
                 return
         print(f'Equipamento inválido.')
         sleep(2)
