@@ -23,8 +23,7 @@ def menu_principal():
 
     elif jogo.strip(" ").lower() == 'carregar jogo':
         try:
-            usuario.save('carregar')
-            print('Jogo carregado com sucesso!')
+            usuario.load()
             menu_opcoes()
 
         except FileNotFoundError:
@@ -40,6 +39,11 @@ def menu_principal():
 
 def menu_opcoes():
     """Função para chamar o menu de opções"""
+    # Dicionário dos métodos da classe Usuario
+    metodos_usuario = {
+        'status': usuario.status, 'equips': usuario.equips, 'inventario': usuario.invent,
+        'inventário': usuario.invent, 'salvar': usuario.save
+    }
 
     print('Menu de opções')
     print('________________________')
@@ -48,31 +52,22 @@ def menu_opcoes():
     print('|  Salvar   Inventário |')
     print('|  Sair                |')
     print('------------------------')
-    opcao = input('Digite uma das opções do menu: ')
+    opcao = input('Digite uma das opções do menu: ').strip(" ").lower()
     clear()
 
-    if opcao.strip(" ").lower() == 'viajar':
+    if opcao == 'viajar':
         viajar()
 
-    elif opcao.strip(" ").lower() == 'descansar':
+    elif opcao == 'descansar':
         usuario.vida_atual = usuario.vida
         usuario.mana_atual = usuario.mana
         print('Você monta uma tenda para descansar um pouco...')
-        print('Descansando, você recupera vida e mana!')
+        print('Descansando, você recupera sua vida e mana!')
 
-    elif opcao.strip(" ").lower() == 'status':
-        usuario.status()
+    elif opcao in metodos_usuario.keys():
+        metodos_usuario.get(opcao)()
 
-    elif opcao.strip(" ").lower() == 'equips':
-        usuario.equips()
-
-    elif opcao.strip(" ").lower() == 'salvar':
-        usuario.save('salvar')
-
-    elif opcao.strip(" ").lower() in ['inventario', 'inventário']:
-        usuario.invent()
-
-    elif opcao.strip(" ").lower() == 'sair':
+    elif opcao == 'sair':
         print('Programa finalizado.')
         exit()
 

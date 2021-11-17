@@ -296,20 +296,20 @@ class Usuario(Personagem):
             sleep(2)
             clear()
 
-    def save(self, opcao):
-        """Método utilizado para salvar e carregar o jogo"""
+    def save(self):
+        """Método utilizado para salvar o jogo"""
+        with open('lib/save.json', 'w') as save:
+            save.write(dumps(self.__dict__))
+            print('Jogo salvo com sucesso!')
 
-        if opcao == 'salvar':
-            with open('lib/save.json', 'w') as save:
-                save.write(dumps(self.__dict__))
-                print('Jogo salvo com sucesso!')
-
-        elif opcao == 'carregar':
-            with open('lib/save.json') as save:
-                jogo = list(load(save).values())
-                self.vida, self.vida_atual, self.ataque, self.defesa, self.mana, self.mana_atual = jogo[:6]
-                self.dano_magico, self.barra_de_xp, self.levelup, self.level, self.dinheiro = jogo[6:11]
-                self.inventario, self.espada, self.escudo, self.armadura = jogo[11:15]
+    def load(self):
+        """Método utilizado para carregar o jogo"""
+        with open('lib/save.json') as save:
+            jogo = list(load(save).values())
+            self.vida, self.vida_atual, self.ataque, self.defesa, self.mana, self.mana_atual = jogo[:6]
+            self.dano_magico, self.barra_de_xp, self.levelup, self.level, self.dinheiro = jogo[6:11]
+            self.inventario, self.espada, self.escudo, self.armadura = jogo[11:15]
+        print('Jogo carregado com sucesso!')
 
     def compra_equip(self, nome_equipamento, tipo_equipamento):
         """Método para efetuar a compra de um equipamento"""
