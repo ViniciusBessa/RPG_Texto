@@ -1,5 +1,5 @@
 import colorama
-from random import random
+from random import random, choice
 from json import dumps, load
 from time import sleep
 
@@ -8,11 +8,13 @@ from .itens import *
 
 def clear():
     """Função para limpar a tela do terminal"""
+
     print('\n' * 30)
 
 
 class Personagem:
     """Classe base dos personagens"""
+
     def __init__(self, vida, ataque, defesa):
         self.__vida = vida
         self.__vida_atual = vida
@@ -54,6 +56,7 @@ class Personagem:
 
 class Usuario(Personagem):
     """Classe do personagem do usuário"""
+
     def __init__(self, vida, mana, ataque, defesa, dano_magico):
         super().__init__(vida, ataque, defesa)
         self.__mana = mana
@@ -158,6 +161,7 @@ class Usuario(Personagem):
 
     def batalha(self, oponente):
         """Método que começa uma batalha entre o usuário e um inimigo."""
+
         print(f'Um(a) {oponente.nome.lower()} se aproxima!')
         sleep(1)
         while oponente.vida_atual > 0:
@@ -294,6 +298,7 @@ class Usuario(Personagem):
 
     def save(self, opcao):
         """Método utilizado para salvar e carregar o jogo"""
+
         if opcao == 'salvar':
             with open('lib/save.json', 'w') as save:
                 save.write(dumps(self.__dict__))
@@ -308,6 +313,7 @@ class Usuario(Personagem):
 
     def compra_equip(self, nome_equipamento, tipo_equipamento):
         """Método para efetuar a compra de um equipamento"""
+
         for equipamento in tipo_equipamento:
             if nome_equipamento.lower() == equipamento[0].lower() and self.dinheiro >= int(
                     equipamento[2]):
@@ -326,10 +332,10 @@ class Usuario(Personagem):
                 sleep(2)
                 return
         print(f'Equipamento inválido.')
-        sleep(2)
 
     def compra_item(self, nome_item, tipo_item):
         """Método para efetuar a compra de um consumível"""
+
         if nome_item.lower() in tipo_item[0] and self.dinheiro >= int(tipo_item[1]):
             print(f'Você comprou um(a) {nome_item.lower()}.')
             self.dinheiro -= int(tipo_item[1])
@@ -343,10 +349,10 @@ class Usuario(Personagem):
             print(f'Você não tem dinheiro o suficiente para comprar o(a) {nome_item.lower()}.')
             return
         print(f'Item inválido.')
-        sleep(2)
 
     def invent(self):
-        """Método para imprimir o inventário do usuário"""
+        """Método para exibir o inventário do usuário"""
+
         poc_vida = str(self.inventario[0][1]).ljust(2)
         poc_mana = str(self.inventario[1][1]).ljust(2)
         quant_dinheiro = str(self.dinheiro).ljust(3)
@@ -364,6 +370,7 @@ class Usuario(Personagem):
 
     def equips(self):
         """Método para ver os equipamentos do usuário"""
+
         # Recebendo os dados do equipamento do usuário
         espada, dano_espada = self.espada[0], self.espada[1]
         escudo, def_escudo = self.escudo[0], self.escudo[1]
@@ -387,6 +394,7 @@ class Usuario(Personagem):
 
     def status(self):
         """Método para ver os status do usuário"""
+
         # Ajuste do tamanho dos dados da tabela
         # Ataque e defesa
         stat_ataque = str(self.ataque).ljust(2)
@@ -404,14 +412,59 @@ class Usuario(Personagem):
         print(f'_________________________')
         print(f'|Status                 |')
         print(f'|                       |')
-        print(f'|Level: {usuario.level}               |')
-        print(f'|Vida: {usuario.vida}    Mana: {usuario.mana}   |')
+        print(f'|Level: {self.level}               |')
+        print(f'|Vida: {self.vida}    Mana: {self.mana}   |')
         print(f'|Ataque: {stat_ataque}  Defesa: {stat_defesa} |')
         print(f'|Dano mágico: {stat_dano_magico}        |')
         print(f'|Xp atual: {stat_barra_xp}     |')
         print(f'|Próximo nível: {stat_levelup}|')
         print(f'-------------------------')
         print(colorama.Style.RESET_ALL, end='')
+    
+    def lvlup(self):
+        # Level
+        self.level += 1
+        stat_level = str(self.level).ljust(2)
+
+        # Vida
+        self.vida += choice(range(1, 4))
+        self.vida_atual = self.vida
+        stat_vida = str(self.vida).ljust(3)
+
+        # Mana
+        self.mana += choice(range(1, 4))
+        self.mana_atual = self.mana
+        stat_mana = str(self.mana).ljust(3)
+
+        # Ataque e defesa
+        self.ataque += choice(range(3))
+        self.defesa += choice(range(2))
+        stat_ataque = str(self.ataque).ljust(2)
+        stat_defesa = str(self.defesa).ljust(2)
+
+        # Dano mágico
+        self.dano_magico += choice(range(1, 3))
+        stat_dano_magico = str(self.dano_magico).ljust(2)
+
+        # Barra de xp e levelup
+        self.barra_de_xp = 0
+        self.levelup += choice(range(4, 8))
+        stat_levelup = (str(self.levelup) + ' XP').ljust(6)
+
+        # Impressão dos dados
+        print(colorama.Fore.LIGHTYELLOW_EX)
+        print('________________________')
+        print('|Level Up!             |')
+        print(f'|Level: {stat_level}             |')
+        print(f'|Vida: {stat_vida}             |')
+        print(f'|Mana: {stat_mana}             |')
+        print(f'|Ataque: {stat_ataque}            |')
+        print(f'|Defesa: {stat_defesa}            |')
+        print(f'|Dano mágico: {stat_dano_magico}       |')
+        print(f'|Próximo nível: {stat_levelup} |')
+        print('------------------------')
+        print(colorama.Style.RESET_ALL, end='')
+        sleep(3)
 
 
 # Personagem do jogador
