@@ -8,13 +8,11 @@ from .itens import *
 
 def clear():
     """Função para limpar a tela do terminal"""
-
     print('\n' * 30)
 
 
 class Personagem:
     """Classe base dos personagens"""
-
     def __init__(self, vida, ataque, defesa):
         self.__vida = vida
         self.__vida_atual = vida
@@ -56,7 +54,6 @@ class Personagem:
 
 class Usuario(Personagem):
     """Classe do personagem do usuário"""
-
     def __init__(self, vida, mana, ataque, defesa, dano_magico):
         super().__init__(vida, ataque, defesa)
         self.__mana = mana
@@ -161,7 +158,6 @@ class Usuario(Personagem):
 
     def batalha(self, oponente):
         """Método que começa uma batalha entre o usuário e um inimigo."""
-
         print(f'Um(a) {oponente.nome.lower()} se aproxima!')
         sleep(1)
         while oponente.vida_atual > 0:
@@ -226,7 +222,7 @@ class Usuario(Personagem):
                         print('Você recuperou 6 de vida.')
                     else:
                         self.vida_atual = self.vida
-                        print('Você está com a vida cheia!')
+                        print('Você recuperou toda sua vida!')
                     self.inventario[0][1] -= 1
                     cond += 1
                 elif opcao.lower() in pocao_de_vida[0] and self.inventario[0][1] == 0:
@@ -238,7 +234,7 @@ class Usuario(Personagem):
                         print('Você recuperou 5 de mana.')
                     else:
                         self.mana_atual = self.mana
-                        print('Você está com a mana cheia!')
+                        print('Você recuperou toda sua mana!')
                     self.inventario[1][1] -= 1
                     cond += 1
                 elif opcao.lower() in pocao_de_mana[0] and self.inventario[1][1] == 0:
@@ -299,7 +295,7 @@ class Usuario(Personagem):
     def save(self):
         """Método utilizado para salvar o jogo"""
         with open('lib/save.json', 'w') as save:
-            save.write(dumps(self.__dict__))
+            save.write(dumps(self.__dict__, indent=2, separators=(',', ': ')))
             print('Jogo salvo com sucesso!')
 
     def load(self):
@@ -313,34 +309,37 @@ class Usuario(Personagem):
 
     def compra_equip(self, nome_equipamento, tipo_equipamento):
         """Método para efetuar a compra de um equipamento"""
-
         for equipamento in tipo_equipamento:
-            if nome_equipamento.lower() == equipamento[0].lower() and self.dinheiro >= int(
+            if nome_equipamento == equipamento[0].lower() and self.dinheiro >= int(
                     equipamento[2]):
-                print(f'Você comprou e equipou a {nome_equipamento.lower()}.')
+                print(f'Você comprou e equipou o(a) {nome_equipamento}.')
                 self.dinheiro -= int(equipamento[2])
+
                 if nome_equipamento.split()[0] == 'espada':
                     self.espada = equipamento
+
                 elif nome_equipamento.split()[0] == 'escudo':
                     self.escudo = equipamento
+
                 else:
                     self.armadura = equipamento
                 return
 
-            elif nome_equipamento.lower() == equipamento[0].lower() and self.dinheiro < int(equipamento[2]):
-                print(f'Você não tem dinheiro o suficiente para comprar o(a) {nome_equipamento.lower()}.')
+            elif nome_equipamento == equipamento[0].lower() and self.dinheiro < int(equipamento[2]):
+                print(f'Você não tem dinheiro o suficiente para comprar o(a) {nome_equipamento}.')
                 sleep(2)
                 return
         print(f'Equipamento inválido.')
 
     def compra_item(self, nome_item, tipo_item):
         """Método para efetuar a compra de um consumível"""
-
         if nome_item.lower() in tipo_item[0] and self.dinheiro >= int(tipo_item[1]):
             print(f'Você comprou um(a) {nome_item.lower()}.')
             self.dinheiro -= int(tipo_item[1])
+
             if nome_item in pocao_de_vida[0]:
                 self.inventario[0][1] += 1
+
             elif nome_item in pocao_de_mana[0]:
                 self.inventario[1][1] += 1
             return
@@ -352,7 +351,6 @@ class Usuario(Personagem):
 
     def invent(self):
         """Método para exibir o inventário do usuário"""
-
         poc_vida = str(self.inventario[0][1]).ljust(2)
         poc_mana = str(self.inventario[1][1]).ljust(2)
         quant_dinheiro = str(self.dinheiro).ljust(3)
@@ -370,7 +368,6 @@ class Usuario(Personagem):
 
     def equips(self):
         """Método para ver os equipamentos do usuário"""
-
         # Recebendo os dados do equipamento do usuário
         espada, dano_espada = self.espada[0], self.espada[1]
         escudo, def_escudo = self.escudo[0], self.escudo[1]
@@ -381,7 +378,7 @@ class Usuario(Personagem):
         escudo = escudo.ljust(24)
         armadura = armadura.ljust(24)
 
-        # Imprimindo os dados dos equipamentos
+        # Mostrando os dados dos equipamentos
         print(colorama.Fore.LIGHTYELLOW_EX)
         print('_______________________________________________')
         print('|Equipamento                                  |')
@@ -394,7 +391,6 @@ class Usuario(Personagem):
 
     def status(self):
         """Método para ver os status do usuário"""
-
         # Ajuste do tamanho dos dados da tabela
         # Ataque e defesa
         stat_ataque = str(self.ataque).ljust(2)
@@ -407,7 +403,7 @@ class Usuario(Personagem):
         stat_barra_xp = (str(self.barra_de_xp) + ' XP').ljust(8)
         stat_levelup = (str(self.levelup) + ' XP').ljust(8)
 
-        # Impressão da tabela de status
+        # Tabela de status
         print(colorama.Fore.LIGHTYELLOW_EX)
         print(f'_________________________')
         print(f'|Status                 |')
@@ -422,6 +418,7 @@ class Usuario(Personagem):
         print(colorama.Style.RESET_ALL, end='')
     
     def lvlup(self):
+        """Método chamado ao usuário subir de nível"""
         # Level
         self.level += 1
         stat_level = str(self.level).ljust(2)
@@ -451,7 +448,7 @@ class Usuario(Personagem):
         self.levelup += choice(range(4, 8))
         stat_levelup = (str(self.levelup) + ' XP').ljust(6)
 
-        # Impressão dos dados
+        # Mostrandos os dados
         print(colorama.Fore.LIGHTYELLOW_EX)
         print('________________________')
         print('|Level Up!             |')
