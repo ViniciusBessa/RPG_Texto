@@ -183,16 +183,16 @@ class Usuario(Personagem):
             print(f'|\n------------------------------')
 
             # Menu de ações
-            print(f'____________________________________\n|', end='')
-            print(colorama.Fore.YELLOW, f'Atacar    Mágia    Item    Fugir ', end='')
+            print(f'_________________________________________\n|', end='')
+            print(colorama.Fore.YELLOW, f' 1 Atacar   2 Mágia   3 Item   4 Fugir ', end='')
             print(colorama.Style.RESET_ALL, end='')
-            print(f'|\n------------------------------------')
+            print(f'|\n-----------------------------------------')
 
             # Ações do jogador
             escolha = input('Digite uma das ações: ')
 
             # Ataque físico
-            if escolha.lower() == 'atacar':
+            if escolha.lower() in ('atacar', '1') :
                 if self.ataque + self.espada[1] > oponente.defesa:
                     print(f'Você causou {self.ataque + self.espada[1] - oponente.defesa} de dano com a espada!')
                     oponente.vida_atual -= self.ataque + self.espada[1] - oponente.defesa
@@ -201,19 +201,19 @@ class Usuario(Personagem):
                 cond += 1
 
             # Ataque mágico
-            elif escolha.lower() == 'mágia' and self.mana_atual >= 6:
+            elif escolha.lower() in ('mágia', '2' ) and self.mana_atual >= 6:
                 print(f'Você causou {self.dano_magico} de dano com a mágia!')
                 oponente.vida_atual -= self.dano_magico
                 self.mana_atual -= 6
                 cond += 1
 
             # Sem mana para ataque mágico
-            elif escolha.lower() == 'mágia' and self.mana_atual < 6:
+            elif escolha.lower() in ('mágia', '2') and self.mana_atual < 6:
                 print('Mana insuficiente!')
                 sleep(2)
 
             # Item
-            elif escolha.lower() == 'item':
+            elif escolha.lower() in ('item','3'):
                 self.invent()
                 opcao = input('Digite um dos itens disponíveis: ')
                 if opcao.lower() in pocao_de_vida[0] and self.inventario[0][1] > 0:
@@ -246,7 +246,7 @@ class Usuario(Personagem):
                 sleep(2)
 
             # Fugir
-            elif escolha.lower() == 'fugir':
+            elif escolha.lower() in ('fugir', '4'):
                 if random() > 0.5:
                     print('Você conseguiu fugir!')
                     sleep(2)
@@ -294,13 +294,13 @@ class Usuario(Personagem):
 
     def save(self):
         """Método utilizado para salvar o jogo"""
-        with open('lib/save.json', 'w') as save:
+        with open('lib/saveGame/save.json', 'w') as save:
             save.write(dumps(self.__dict__, indent=2, separators=(',', ': ')))
             print('Jogo salvo com sucesso!')
 
     def load(self):
         """Método utilizado para carregar o jogo"""
-        with open('lib/save.json') as save:
+        with open('lib/saveGame/save.json') as save:
             jogo = list(load(save).values())
             self.vida, self.vida_atual, self.ataque, self.defesa, self.mana, self.mana_atual = jogo[:6]
             self.dano_magico, self.barra_de_xp, self.levelup, self.level, self.dinheiro = jogo[6:11]
@@ -356,14 +356,14 @@ class Usuario(Personagem):
         quant_dinheiro = str(self.dinheiro).ljust(3)
 
         print(colorama.Fore.LIGHTYELLOW_EX)
-        print('_________________________________')
-        print('|Inventário                     |')
-        print('|                               |')
-        print(f'|Poção de vida   Quantidade: {poc_vida} |')
-        print(f'|Poção de mana   Quantidade: {poc_mana} |')
-        print('|                               |')
-        print(f'|Dinheiro: {quant_dinheiro}                  |')
-        print('---------------------------------')
+        print('___________________________________')
+        print('|Inventário                        |')
+        print('|                                  |')
+        print(f'| 1 Poção de vida   Quantidade: {poc_vida} |')
+        print(f'| 2 Poção de mana   Quantidade: {poc_mana} |')
+        print('|                                  |')
+        print(f'|Dinheiro: {quant_dinheiro}                     |')
+        print('------------------------------------')
         print(colorama.Style.RESET_ALL, end='')
 
     def equips(self):
