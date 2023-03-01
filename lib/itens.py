@@ -8,5 +8,5 @@ escudos = [['Escudo de madeira', 2, '30'], ['Escudo de bronze', 3, '55'], ['Escu
 armaduras = [['Armadura de ferro', 3, '40'], ['Armadura de bronze', 4, '70'], ['Armadura de prata', 7, '180']]
 
 # Poções
-pocao_de_vida = [['poção de vida', 'pocao de vida'], 10]
-pocao_de_mana = [['poção de mana', 'pocao de mana'], 10]
+pocao_de_vida = [['poção de vida', 'pocao de vida', '1'], 10]
+pocao_de_mana = [['poção de mana', 'pocao de mana', '2'], 10]
