@@ -1,4 +1,5 @@
 import colorama
+import os
 from random import random, choice
 from json import dumps, load
 from time import sleep
@@ -13,6 +14,7 @@ def clear():
 
 class Personagem:
     """Classe base dos personagens"""
+
     def __init__(self, vida, ataque, defesa):
         self.__vida = vida
         self.__vida_atual = vida
@@ -54,6 +56,7 @@ class Personagem:
 
 class Usuario(Personagem):
     """Classe do personagem do usuário"""
+
     def __init__(self, vida, mana, ataque, defesa, dano_magico):
         super().__init__(vida, ataque, defesa)
         self.__mana = mana
@@ -166,7 +169,8 @@ class Usuario(Personagem):
             # Status do oponente
             vida_oponente = str(oponente.vida_atual).ljust(4)
 
-            print(f'______________________________\n| {oponente.nome.ljust(11)} ', end='')
+            print(
+                f'______________________________\n| {oponente.nome.ljust(11)} ', end='')
             print(colorama.Fore.RED, f'Vida: {vida_oponente}    ', end='')
             print(colorama.Style.RESET_ALL, end='')
             print(f'|\n------------------------------')
@@ -175,7 +179,8 @@ class Usuario(Personagem):
             vida_jogador = str(self.vida_atual).ljust(2)
             mana_jogador = str(self.mana_atual).ljust(2)
 
-            print(f'______________________________\n| Você                       |\n|', end='')
+            print(
+                f'______________________________\n| Você                       |\n|', end='')
             print(colorama.Fore.RED, f'Vida: {vida_jogador}    ', end='')
             print(colorama.Style.RESET_ALL, end='')
             print(colorama.Fore.BLUE, f'Mana: {mana_jogador}      ', end='')
@@ -184,7 +189,8 @@ class Usuario(Personagem):
 
             # Menu de ações
             print(f'_________________________________________\n|', end='')
-            print(colorama.Fore.YELLOW, f' 1 Atacar   2 Mágia   3 Item   4 Fugir ', end='')
+            print(colorama.Fore.YELLOW,
+                  f' 1 Atacar   2 Mágia   3 Item   4 Fugir ', end='')
             print(colorama.Style.RESET_ALL, end='')
             print(f'|\n-----------------------------------------')
 
@@ -192,16 +198,18 @@ class Usuario(Personagem):
             escolha = input('Digite uma das ações: ')
 
             # Ataque físico
-            if escolha.lower() in ('atacar', '1') :
+            if escolha.lower() in ('atacar', '1'):
                 if self.ataque + self.espada[1] > oponente.defesa:
-                    print(f'Você causou {self.ataque + self.espada[1] - oponente.defesa} de dano com a espada!')
-                    oponente.vida_atual -= self.ataque + self.espada[1] - oponente.defesa
+                    print(
+                        f'Você causou {self.ataque + self.espada[1] - oponente.defesa} de dano com a espada!')
+                    oponente.vida_atual -= self.ataque + \
+                        self.espada[1] - oponente.defesa
                 else:
                     print('Seu ataque não causou nenhum dano.')
                 cond += 1
 
             # Ataque mágico
-            elif escolha.lower() in ('mágia', '2' ) and self.mana_atual >= 6:
+            elif escolha.lower() in ('mágia', '2') and self.mana_atual >= 6:
                 print(f'Você causou {self.dano_magico} de dano com a mágia!')
                 oponente.vida_atual -= self.dano_magico
                 self.mana_atual -= 6
@@ -213,7 +221,7 @@ class Usuario(Personagem):
                 sleep(2)
 
             # Item
-            elif escolha.lower() in ('item','3'):
+            elif escolha.lower() in ('item', '3'):
                 self.invent()
                 opcao = input('Digite um dos itens disponíveis: ')
                 if opcao.lower() in pocao_de_vida[0] and self.inventario[0][1] > 0:
@@ -267,12 +275,14 @@ class Usuario(Personagem):
             if cond != 0 and oponente.ataque > self.escudo[1] + self.armadura[1] + self.defesa:
                 print(f'O(a) {oponente.nome.lower()} causou '
                       f'{oponente.ataque - (self.escudo[1] + self.armadura[1] + self.defesa)} de dano.')
-                self.vida_atual -= oponente.ataque - (self.escudo[1] + self.armadura[1] + self.defesa)
+                self.vida_atual -= oponente.ataque - \
+                    (self.escudo[1] + self.armadura[1] + self.defesa)
                 sleep(2)
                 clear()
 
             elif cond != 0:
-                print(f'O ataque do(a) {oponente.nome.lower()} não causou nenhum dano.')
+                print(
+                    f'O ataque do(a) {oponente.nome.lower()} não causou nenhum dano.')
                 sleep(2)
                 clear()
 
@@ -294,6 +304,9 @@ class Usuario(Personagem):
 
     def save(self):
         """Método utilizado para salvar o jogo"""
+        if not os.path.exists('lib/saveGame'):
+            os.mkdir('lib/saveGame')
+
         with open('lib/saveGame/save.json', 'w') as save:
             save.write(dumps(self.__dict__, indent=2, separators=(',', ': ')))
             print('Jogo salvo com sucesso!')
@@ -302,8 +315,10 @@ class Usuario(Personagem):
         """Método utilizado para carregar o jogo"""
         with open('lib/saveGame/save.json') as save:
             jogo = list(load(save).values())
-            self.vida, self.vida_atual, self.ataque, self.defesa, self.mana, self.mana_atual = jogo[:6]
-            self.dano_magico, self.barra_de_xp, self.levelup, self.level, self.dinheiro = jogo[6:11]
+            self.vida, self.vida_atual, self.ataque, self.defesa, self.mana, self.mana_atual = jogo[
+                :6]
+            self.dano_magico, self.barra_de_xp, self.levelup, self.level, self.dinheiro = jogo[
+                6:11]
             self.inventario, self.espada, self.escudo, self.armadura = jogo[11:15]
         print('Jogo carregado com sucesso!')
 
@@ -326,7 +341,8 @@ class Usuario(Personagem):
                 return
 
             elif nome_equipamento == equipamento[0].lower() and self.dinheiro < int(equipamento[2]):
-                print(f'Você não tem dinheiro o suficiente para comprar o(a) {nome_equipamento}.')
+                print(
+                    f'Você não tem dinheiro o suficiente para comprar o(a) {nome_equipamento}.')
                 sleep(2)
                 return
         print(f'Equipamento inválido.')
@@ -345,7 +361,8 @@ class Usuario(Personagem):
             return
 
         elif nome_item.lower() in tipo_item[0] and self.dinheiro < int(tipo_item[1]):
-            print(f'Você não tem dinheiro o suficiente para comprar o(a) {nome_item.lower()}.')
+            print(
+                f'Você não tem dinheiro o suficiente para comprar o(a) {nome_item.lower()}.')
             return
         print(f'Item inválido.')
 
@@ -416,7 +433,7 @@ class Usuario(Personagem):
         print(f'|Próximo nível: {stat_levelup}|')
         print(f'-------------------------')
         print(colorama.Style.RESET_ALL, end='')
-    
+
     def lvlup(self):
         """Método chamado ao usuário subir de nível"""
         # Level

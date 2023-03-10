@@ -37,13 +37,6 @@ def menu_principal():
 
 def menu_opcoes():
     """Função para chamar o menu de opções"""
-    metodos_usuario = {
-        '2' or 'status': usuario.status, 
-        '5' or 'equips': usuario.equips, 
-        '6' or 'inventario': usuario.invent,
-        '3' or 'salvar': usuario.save
-    }
-
     print('Menu de opções')
     print('_________________________')
     print('| 1 Viajar  4 Descansar  |')
@@ -54,23 +47,26 @@ def menu_opcoes():
     opcao = input('Digite uma das opções do menu: ').strip(" ").lower()
     clear()
 
-    if opcao in ('viajar', '1'):
-        viajar()
-
-    elif opcao in ('descansar', '4'):
-        usuario.vida_atual, usuario.mana_atual = usuario.vida, usuario.mana
-        print('Você monta uma tenda para descansar um pouco...')
-        print('Descansando, você recupera sua vida e mana!')
-
-    elif opcao in metodos_usuario:
-        metodos_usuario.get(opcao)()
-
-    elif opcao in ('sair', '7'):
-        print('Programa finalizado.')
-        exit()
-
-    else:
-        print('Opção inválida')
+    match opcao:
+        case ('viajar' | '1'):
+            viajar()
+        case ('status' | '2'):
+            usuario.status()
+        case ('salvar' | '3'):
+            usuario.save()
+        case ('descansar' | '4'):
+            usuario.vida_atual, usuario.mana_atual = usuario.vida, usuario.mana
+            print('Você monta uma tenda para descansar um pouco...')
+            print('Descansando, você recupera sua vida e mana!')
+        case ('equips' | '5'):
+            usuario.equips()
+        case ('inventario' | '6'):
+            usuario.invent()
+        case ('sair' | '7'):
+            print('Programa finalizado.')
+            exit()
+        case _:
+            print('Opção inválida')
 
     sleep(2)
     menu_opcoes()
@@ -78,34 +74,32 @@ def menu_opcoes():
 
 def viajar():
     """Função para viajar para alguns lugares"""
-    # Dicionário de todos lugares com inimigos
-    lugares_inimigos = {
-        '1' or 'floresta': floresta, 
-        '3' or 'caverna': caverna, 
-        '4' or 'selva': selva
-    }
-
     print('Locais disponíveis')
     print('_________________________')
     print('| 1 Floresta  3 Caverna  |')
     print('| 2 Vila      4 Selva    |')
     print('|             5 Sair     |')
     print('-------------------------')
-    local = input('Digite uma opção, ou sair para voltar ao menu de opções: ').strip(" ").lower()
+    local = input(
+        'Digite uma opção, ou sair para voltar ao menu de opções: ').strip(" ").lower()
 
-    if local in lugares_inimigos:
-        inimigo = Inimigo(*choice(lugares_inimigos.get(local)))
-        usuario.batalha(inimigo)
-
-    elif local in ('vila', '2'):
-        vila()
-
-    elif local in ('sair', '5'):
-        menu_opcoes()
-
-    else:
-        print('Local inválido.')
-        sleep(2)
+    match local:
+        case ('floresta' | '1'):
+            inimigo = Inimigo(*choice(floresta))
+            usuario.batalha(inimigo)
+        case ('vila' | '2'):
+            vila()
+        case ('caverna' | '3'):
+            inimigo = Inimigo(*choice(caverna))
+            usuario.batalha(inimigo)
+        case ('selva' | '4'):
+            inimigo = Inimigo(*choice(selva))
+            usuario.batalha(inimigo)
+        case ('sair' | '5'):
+            menu_opcoes
+        case _:
+            print('Local inválido.')
+            sleep(2)
 
     # Verificando se o usuário subiu de nível
     if usuario.barra_de_xp >= usuario.levelup:
@@ -127,7 +121,7 @@ def vila():
         apotecario()
 
     elif local in ('ferreiro', '2'):
-        ferreiro()     
+        ferreiro()
 
     elif local in ('sair', '3'):
         viajar()
@@ -171,9 +165,12 @@ def apotecario():
 
 def ferreiro():
     tipos_equipamentos = {
-        '1' or 'espadas': espadas, 
-        '2' or 'escudos': escudos, 
-        '3' or 'armaduras': armaduras
+        '1': espadas,
+        'espadas': espadas,
+        '2': escudos,
+        'escudos': escudos,
+        '3': armaduras,
+        'armaduras': armaduras
     }
 
     dinheiro = str(usuario.dinheiro).ljust(4)
@@ -190,11 +187,13 @@ def ferreiro():
         equipamentos = tipos_equipamentos.get(escolha)
         print('_____________________________________________')
         for equipamento in equipamentos:
-            print(f'| {equipamento[0].ljust(20)} Dano: {equipamento[1]}   Preço: {equipamento[2].ljust(3)} |')
+            print(
+                f'| {equipamento[0].ljust(20)} Dano: {equipamento[1]}   Preço: {equipamento[2].ljust(3)} |')
         print('|                                           |')
         print(f'| Dinheiro: {dinheiro}                            |')
         print('---------------------------------------------')
-        equip_esc = input(f'Digite o nome de um(a) dos(as) {escolha}: ').strip(" ").lower()
+        equip_esc = input(
+            f'Digite o nome de um dos itens: ').strip(" ").lower()
         usuario.compra_equip(equip_esc, equipamentos)
 
     elif escolha in ('sair', '4'):
