@@ -96,7 +96,7 @@ def viajar():
             inimigo = Inimigo(*choice(selva))
             usuario.batalha(inimigo)
         case ('sair' | '5'):
-            menu_opcoes
+            menu_opcoes()
         case _:
             print('Local inválido.')
             sleep(2)
